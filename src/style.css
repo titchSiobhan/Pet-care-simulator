@@ -1,0 +1,13 @@
+body {
+    background-color: #325;
+}
+
+.pet {
+    color: #274;
+    font-size: 3rem;
+}
+
+.stat {
+    color: #fff;
+    font-size: 2rem;
+}
