@@ -22,8 +22,8 @@ class petStats {
 		this.maxHealth = 10;
 		this.maxHunger = 10;
 		this.coinAmount = 0;
-
-		
+		this.energy = 10;
+		this.maxEnergy = 10;
 	}
 
 	increaseLevel(foodItems, drinkItems) {
@@ -35,6 +35,7 @@ class petStats {
 			this.exp = 0;
 			this.health += 5;
 			this.coinAmount += 20;
+			this.maxEnergy += 5;
 
 			// buttons(this, foodItems, drinkItems);
 		}
@@ -50,7 +51,7 @@ class petStats {
 		this.hungerTimer = setInterval(() => {
 			this.hungerDecrease();
 			updateBars(this);
-		}, 1000);
+		}, 4000);
 	}
 
 	stopDecay() {
@@ -71,6 +72,19 @@ class petStats {
 		}
 	}
 
+	energyDecrease() {
+		if (this.energy > 0) {
+			this.energy--;
+		}
+	}
+
+	energyIncrease() {
+		this.energy++;
+		if (this.energy > this.maxEnergy) {
+			this.energy = this.maxEnergy;
+		}
+	}
+
 	eat(foodItem) {
 		if (this.hunger >= this.maxHunger) {
 			console.log(`${this.name} isn't hungry`);
@@ -86,6 +100,11 @@ class petStats {
 			}
 			this.gainExp(foodItem.giveExp);
 			
+
+			this.energy += foodItem.energyGiven;
+			if (this.energy > this.maxEnergy) {
+				this.energy = this.maxEnergy;
+			}
 		}
 	}
 
@@ -98,7 +117,12 @@ class petStats {
 				this.hunger = this.maxHunger;
 			}
 			this.gainExp(drinkItem.giveExp);
-			updateBars(this);
+			
+
+			this.energy += drinkItem.energyGiven;
+			if (this.energy > this.maxEnergy) {
+				this.energy = this.maxEnergy;
+			}
 		}
 	}
 
@@ -113,18 +137,18 @@ class petStats {
 		this.isDead = true;
 		this.stopDecay();
 		const game = document.querySelector('.game');
-		if (!game) return
+		if (!game) return;
 		game.innerHTML = '';
 
 		const gameOverText = document.createElement('div');
 		gameOverText.setAttribute('class', 'stat');
 		game.appendChild(gameOverText);
 		if (this.health <= 0) {
-		gameOverText.textContent = `${this.name} has died due to poor health`;
+			gameOverText.textContent = `${this.name} has died due to poor health`;
 		}
 
 		if (this.hunger <= 0) {
-		gameOverText.textContent = `${this.name} has died due to hunger`;
+			gameOverText.textContent = `${this.name} has died due to hunger`;
 		}
 		setTimeout(() => {
 			game.removeChild(gameOverText);
