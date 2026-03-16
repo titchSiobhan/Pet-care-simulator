@@ -36,9 +36,6 @@ function rockPaperScissors(chosenPet) {
 	container.appendChild(playerPaper);
 	container.appendChild(playerScissors);
 
-	const rock = document.querySelector('.rock');
-	const paper = document.querySelector('.paper');
-	const scissors = document.querySelector('.scissors');
 
 	function getPlayerChoice(event) {
         container.removeChild(playerRock);
@@ -62,11 +59,16 @@ function rockPaperScissors(chosenPet) {
         chosenPet.coinAmount += 4;
         chosenPet.exp += 6;
         chosenPet.energy -= 4;
+		chosenPet.happiness += 2;
+		if (chosenPet.happiness > chosenPet.maxHappiness) {
+						chosenPet.happiness = chosenPet.maxHappiness;
+					}
         updateBars(chosenPet);
         return "Win";
     }
 
     chosenPet.energy -= 4;
+	chosenPet.happiness -= 5
     updateBars(chosenPet);
     return "Lose";
 }

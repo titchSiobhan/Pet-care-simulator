@@ -2,7 +2,7 @@ import './style.css';
 
 import { petList } from './pet-logic/petTypes.js';
 
-import { petStats } from './pet-logic/petStats.js';
+
 
 // import { displayStats, updateBars, buttons, checkButtons, baseButtons } from './pet-logic/ui.js';
 

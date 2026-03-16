@@ -1,5 +1,5 @@
-import { foods, foodItems, drinks, drinkItems } from './food.js';
-import { updateBars, buttons } from './ui.js';
+
+import { updateBars } from './ui.js';
 
 import { startGame } from './startGame.js';
 
@@ -24,9 +24,11 @@ class petStats {
 		this.coinAmount = 0;
 		this.energy = 10;
 		this.maxEnergy = 10;
+		this.happiness = 100;
+		this.maxHappiness = 100;
 	}
 
-	increaseLevel(foodItems, drinkItems) {
+	increaseLevel() {
 		this.expNeeded = this.level ** 2 * 20;
 		if (this.exp >= this.expNeeded) {
 			this.level++;
@@ -34,9 +36,9 @@ class petStats {
 			this.maxHunger += 5;
 			this.exp = 0;
 			this.health += 5;
-			this.coinAmount += 20;
+			this.coinAmount += 4;
 			this.maxEnergy += 5;
-
+			this.maxHappiness += 10;
 			// buttons(this, foodItems, drinkItems);
 		}
 	}
@@ -72,6 +74,12 @@ class petStats {
 		}
 	}
 
+	happinessIncrease() {
+		if (this.happiness > this.maxHappiness) {
+			this.happiness = this.maxHappiness;
+		}
+	}
+
 	energyDecrease() {
 		if (this.energy > 0) {
 			this.energy--;
@@ -99,7 +107,9 @@ class petStats {
 				this.health -= foodItem.giveHealth;
 			}
 			this.gainExp(foodItem.giveExp);
-			
+			if (this.happiness > this.maxHappiness) {
+			this.happiness = this.maxHappiness;
+		}
 
 			this.energy += foodItem.energyGiven;
 			if (this.energy > this.maxEnergy) {
@@ -117,7 +127,9 @@ class petStats {
 				this.hunger = this.maxHunger;
 			}
 			this.gainExp(drinkItem.giveExp);
-			
+			if (this.happiness > this.maxHappiness) {
+			this.happiness = this.maxHappiness;
+		}
 
 			this.energy += drinkItem.energyGiven;
 			if (this.energy > this.maxEnergy) {

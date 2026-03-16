@@ -11,15 +11,20 @@ import {
 	updateBars,
 	foodButtons,
 	drinkButtons,
-	checkButtons,
+	
 	baseButtons,
+	resetButtons,
+	hideButtons,
+	backButton,
 } from './ui.js';
 
-import { startGame, startForm } from './startGame.js';
+
 
 import { drinkItems, foodItems } from './food.js';
 
 import { choseRandomPet } from '../index.js';
+
+import { shop, showInventory } from './inventory.js';
 
 let chosenPet;
 
@@ -28,6 +33,7 @@ function gamePlay() {
 	let nameValue = document.querySelector('.newName');
 	let newPetName = nameValue.value;
 	console.log(newPetName);
+	
 
 	//attaches new to new pet
 	let chosenType = choseRandomPet(petList);
@@ -50,9 +56,12 @@ function gamePlay() {
 
 	game.appendChild(displayPet);
 	displayStats(chosenPet);
+	console.log(chosenPet.happiness)
+	console.log(chosenPet.maxHappiness)
+	console.log((chosenPet.happiness / chosenPet.maxHappiness) *100)
 
 	//comment out to pause decay
-	//chosenPet.hungerIsDecaying()
+	chosenPet.hungerIsDecaying()
 
 	console.log('Inside buttons call:', foodItems);
 
@@ -62,6 +71,9 @@ function gamePlay() {
 	const foodListButtons = document.querySelector('.foods');
 	const drinkListButtons = document.querySelector('.drinks');
 	const gameListButton = document.querySelector('.gamesBtn');
+	const shopListButton = document.querySelector('.shop');
+	const inventoryButton = document.querySelector('.inventoryBtn')
+
 
 	foodListButtons.addEventListener('click', () => {
 		foodButtons(foodItems, chosenPet);
@@ -69,9 +81,7 @@ function gamePlay() {
 			item.button.style.display =
 				chosenPet.level < item.levelNeeded ? 'none' : 'block';
 		});
-        foodListButtons.style.display = 'none';
-        drinkListButtons.style.display = 'none';
-		gameListButton.style.display = 'none';
+        hideButtons()
 		
 	});
 
@@ -81,9 +91,7 @@ function gamePlay() {
 			item.button.style.display =
 				chosenPet.level < item.levelNeeded ? 'none' : 'block';
 		});
-        foodListButtons.style.display = 'none';
-        drinkListButtons.style.display = 'none';
-		gameListButton.style.display = 'none';
+        hideButtons()
 	});
 
 	gameListButton.addEventListener('click', () => {
@@ -105,9 +113,7 @@ function gamePlay() {
 				setTimeout(() => {
 					game.removeChild(popUp);
 					
-					foodListButtons.style.display = 'block';
-					drinkListButtons.style.display = 'block';
-					gameListButton.style.display = 'block';
+					resetButtons()
 				}, 1500)
 			} else{
 			guessingGame(chosenPet);
@@ -135,9 +141,7 @@ function gamePlay() {
 				setTimeout(() => {
 					game.removeChild(popUp);
 					
-					foodListButtons.style.display = 'block';
-					drinkListButtons.style.display = 'block';
-					gameListButton.style.display = 'block';
+					resetButtons()
 				}, 1500)
 			} else{
 			rockPaperScissors(chosenPet);
@@ -147,9 +151,19 @@ function gamePlay() {
 			
 		})
 		
-		foodListButtons.style.display = 'none';
-        drinkListButtons.style.display = 'none';
-		gameListButton.style.display = 'none';
+		hideButtons()
+	})
+
+	shopListButton.addEventListener('click', () => {
+		backButton()
+		shop(chosenPet);
+		hideButtons()
+	})
+
+	inventoryButton.addEventListener('click', () => {
+		backButton()
+		showInventory(chosenPet)
+		hideButtons()
 	})
 
 	updateBars(chosenPet, foodItems, drinkItems);

@@ -1,4 +1,4 @@
-import { petStats } from "./petStats.js";
+
 
 function startGame() {
     const button = document.createElement('button');
@@ -17,7 +17,8 @@ function startForm() {
     const nameBox = document.createElement('input');
     nameBox.setAttribute('type', 'textbox');
     nameBox.setAttribute('class', 'newName');
-    nameBox.setAttribute('id', 'newName')
+    nameBox.setAttribute('id', 'newName');
+    nameBox.setAttribute('maxLength', 15)
 
     const submit = document.createElement('button');
     submit.setAttribute('type', 'submit');
