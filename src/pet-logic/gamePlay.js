@@ -82,7 +82,7 @@ autoSave()
 	console.log((chosenPet.happiness / chosenPet.maxHappiness) *100)
 
 	//comment out to pause decay
-	chosenPet.hungerIsDecaying()
+	//chosenPet.hungerIsDecaying()
 
 
 
@@ -128,7 +128,7 @@ autoSave()
 
 			if (chosenPet.energy < 2) {
 				const popUp = document.createElement('div');
-				popUp.setAttribute('class', 'stat popUp');
+				popUp.setAttribute('class', 'stat popUp tired');
 				popUp.textContent =`${chosenPet.name} is too tired`;
 				popUp.style.display = 'flex';
 				game.appendChild(popUp);
