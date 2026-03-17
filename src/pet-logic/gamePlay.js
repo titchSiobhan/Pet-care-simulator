@@ -82,7 +82,7 @@ autoSave()
 	console.log((chosenPet.happiness / chosenPet.maxHappiness) *100)
 
 	//comment out to pause decay
-	//chosenPet.hungerIsDecaying()
+	chosenPet.hungerIsDecaying()
 
 
 
