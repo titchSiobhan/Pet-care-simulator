@@ -21,22 +21,22 @@ function addStock(pet, name, amount = 1) {
 //remove item
 //decreases quantity or deletes item
 function removeStock(name, amount = 1) {
-	const current = inventory.get(name) || 0;
+	const current = pet.inventory.get(name) || 0;
 	if (current <= amount) {
-		inventory.delete(name);
+		pet.inventory.delete(name);
 	} else {
-		inventory.set(name, current - amount);
+		pet.inventory.set(name, current - amount);
 	}
 }
 
 //check if play has item
 function playerHasItem(itemName) {
-	return inventory.has(itemName);
+	return pet.inventory.has(itemName);
 }
 
 //get quantity
 function checkQuantity(itemName) {
-	return inventory.get(itemName) || 0;
+	return pet.inventory.get(itemName) || 0;
 }
 
 //connect to shop

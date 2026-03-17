@@ -44,7 +44,7 @@ const megaHealth = new shopItems ('Mega Health', 'drink', 25, 0, 100, 0, 0);
 const miniHappiness = new shopItems ('Mini Happiness', 'drink', 20, 0, 0, 0, 50);
 const megaHappiness = new shopItems ('Mega Happiness', 'drink', 70, 0 , 0, 0, 100)
 
-shopItemList.push(miniEnergy, megaEnergy, miniHunger, miniHealth, megaHealth, miniHappiness, megaHappiness);
+shopItemList.push(miniEnergy, megaEnergy, miniHunger, megaHunger, miniHealth, megaHealth, miniHappiness, megaHappiness);
 
 const itemData = {
     'Mini Energy': miniEnergy,
