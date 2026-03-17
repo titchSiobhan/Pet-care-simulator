@@ -31,7 +31,7 @@ const foodItems = [
     new foods('Carrot', 7, 9, true, 6, 0, 0),
     new foods('Banana', 7, 9, true, 4, 0, 0),
     new foods('Cheese', 10, 12, true, 9, 2, 0),
-    new foods('Steak', 12, 6, true, 9, 2, 4),
+    new foods('Steak', 12, 6, true, 9, 3, 4),
     new foods('Chocolate', 2, 10, false, 7, 5, 4),
     new foods('Fish', 9, 9, true, 7, 7, 5),
     new foods('Kebab', 9, 8, true, 7, 6, 0),

@@ -20,7 +20,7 @@ function addStock(pet, name, amount = 1) {
 
 //remove item
 //decreases quantity or deletes item
-function removeStock(name, amount = 1) {
+function removeStock(pet, name, amount = 1) {
 	const current = pet.inventory.get(name) || 0;
 	if (current <= amount) {
 		pet.inventory.delete(name);

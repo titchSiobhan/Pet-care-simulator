@@ -35,7 +35,7 @@ class petStats {
 			this.level++;
 			this.maxHealth += 5;
 			this.maxHunger += 5;
-			this.exp = 0;
+			this.exp -= this.expNeeded;
 			this.health += 5;
 			this.coinAmount += 4;
 			this.maxEnergy += 5;

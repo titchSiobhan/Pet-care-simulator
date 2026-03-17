@@ -53,7 +53,7 @@ function rockPaperScissors(chosenPet) {
 		if (player === computer) {
 			chosenPet.energy -= 4;
 			chosenPet.exp += expIncrease / 4;
-			if (chosenPet.exp > chosenPet.expNeeded) {
+			if (chosenPet.exp >= chosenPet.expNeeded) {
 				chosenPet.increaseLevel()
 			}
 			updateBars(chosenPet);

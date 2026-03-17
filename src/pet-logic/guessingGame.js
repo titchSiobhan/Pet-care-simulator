@@ -58,7 +58,7 @@ function guessingGame(chosenPet) {
 					chosenPet.coinAmount += randomCoin;
 					chosenPet.energy -= 2;
 					chosenPet.exp += expIncrease;
-					if (chosenPet.exp > chosenPet.expNeeded) {
+					if (chosenPet.exp >= chosenPet.expNeeded) {
 				chosenPet.increaseLevel()
 			}
 					updateBars(chosenPet);
