@@ -1,6 +1,5 @@
-
 import { updateBars } from './ui.js';
-
+import {  clearSave } from './gamePlay.js';
 import { startGame } from './startGame.js';
 
 // start with egg
@@ -26,6 +25,8 @@ class petStats {
 		this.maxEnergy = 10;
 		this.happiness = 100;
 		this.maxHappiness = 100;
+		this.inventory = new Map();
+		this.saveTimer = null;
 	}
 
 	increaseLevel() {
@@ -53,7 +54,28 @@ class petStats {
 		this.hungerTimer = setInterval(() => {
 			this.hungerDecrease();
 			updateBars(this);
-		}, 4000);
+		}, 3000);
+		
+
+	}
+
+	cancelAutoSave() {
+	clearInterval(this.saveTimer);
+		this.saveTimer = null;
+}
+	healthIsDecreasing() {
+    if (this.healthTimer) return; // prevents duplicates
+
+    this.healthTimer = setInterval(() => {
+        this.healthDecrease();
+        updateBars(this);
+    }, 1000);
+}
+
+
+	stopHealthDecay() {
+		clearInterval(this.healthTimer);
+		this.healthTimer = null;
 	}
 
 	stopDecay() {
@@ -64,6 +86,7 @@ class petStats {
 	healthDecrease() {
 		if (this.health > 0) {
 			this.health--;
+			console.log('HEALTH DECREASE CALLED — source?', this.health);
 		}
 	}
 
@@ -77,6 +100,11 @@ class petStats {
 	happinessIncrease() {
 		if (this.happiness > this.maxHappiness) {
 			this.happiness = this.maxHappiness;
+		}
+	}
+	happinessDecrease() {
+		if (this.happiness > 0) {
+			this.happiness--;
 		}
 	}
 
@@ -95,7 +123,16 @@ class petStats {
 
 	eat(foodItem) {
 		if (this.hunger >= this.maxHunger) {
-			console.log(`${this.name} isn't hungry`);
+			const game = document.querySelector('.game')
+			const hungerPopUp = document.createElement('div');
+			hungerPopUp.setAttribute('class', 'popUp hungerPop')
+			hungerPopUp.style.display = 'flex';
+			hungerPopUp.textContent = `${this.name} isn't hungry`;
+			game.appendChild(hungerPopUp);
+
+			setTimeout(() => {
+				game.removeChild(hungerPopUp)
+			}, 1780)
 		} else {
 			this.hunger += foodItem.giveHunger;
 			if (this.hunger > this.maxHunger) {
@@ -108,19 +145,30 @@ class petStats {
 			}
 			this.gainExp(foodItem.giveExp);
 			if (this.happiness > this.maxHappiness) {
-			this.happiness = this.maxHappiness;
-		}
+				this.happiness = this.maxHappiness;
+			}
 
 			this.energy += foodItem.energyGiven;
 			if (this.energy > this.maxEnergy) {
 				this.energy = this.maxEnergy;
 			}
+			
+
 		}
 	}
 
 	drink(drinkItem) {
 		if (this.hunger >= this.maxHunger) {
-			console.log(`${this.name} isn't hungry`);
+			const game = document.querySelector('.game')
+			const hungerPopUp = document.createElement('div');
+			hungerPopUp.setAttribute('class', 'popUp hungerPop')
+			hungerPopUp.style.display = 'flex';
+			hungerPopUp.textContent = `${this.name} isn't hungry`;
+			game.appendChild(hungerPopUp);
+
+			setTimeout(() => {
+				game.removeChild(hungerPopUp)
+			}, 1780);
 		} else {
 			this.hunger += drinkItem.giveHunger;
 			if (this.hunger > this.maxHunger) {
@@ -128,13 +176,15 @@ class petStats {
 			}
 			this.gainExp(drinkItem.giveExp);
 			if (this.happiness > this.maxHappiness) {
-			this.happiness = this.maxHappiness;
-		}
+				this.happiness = this.maxHappiness;
+			}
 
 			this.energy += drinkItem.energyGiven;
 			if (this.energy > this.maxEnergy) {
 				this.energy = this.maxEnergy;
 			}
+			
+
 		}
 	}
 
@@ -144,28 +194,55 @@ class petStats {
 		updateBars(this);
 	}
 
-	gameOver() {
-		if (this.isDead) return;
-		this.isDead = true;
-		this.stopDecay();
+	gameOver(pet) {
+		// if (this.isDead) {
+		// 	// already dead, but still allow restart
+		// 	this.stopDecay();
+		// 	// this.stopHealthDecay();
+		// 	this.cancelAutoSave();
+			
+		// } else {
+		// 	this.isDead = true;
+		// 	this.stopDecay();
+		// 	// this.stopHealthDecay();
+			
+		// }
+		   if (!this.isDead) {
+        this.isDead = true;
+    }
+
+    // Stop ALL timers
+    this.stopDecay();
+    this.cancelAutoSave()
+    clearInterval(this.mainLoop);
+
+		
+
 		const game = document.querySelector('.game');
 		if (!game) return;
-		game.innerHTML = '';
+		
 
 		const gameOverText = document.createElement('div');
-		gameOverText.setAttribute('class', 'stat');
+		gameOverText.setAttribute('class', 'stat popUp');
 		game.appendChild(gameOverText);
 		if (this.health <= 0) {
 			gameOverText.textContent = `${this.name} has died due to poor health`;
+			
+			clearSave()
 		}
 
 		if (this.hunger <= 0) {
 			gameOverText.textContent = `${this.name} has died due to hunger`;
+			console.log('pet death')
+			clearSave()
 		}
 		setTimeout(() => {
-			game.removeChild(gameOverText);
+			pet = null;
+			game.innerHTML = '';
 			startGame();
 		}, 1780);
+		
+		
 	}
 }
 

@@ -1,10 +1,14 @@
-import { updateBars, endGame} from './ui';
+import { updateBars, endGame } from './ui';
 
 
 
 function rockPaperScissors(chosenPet) {
 	const container = document.createElement('div');
-	container.setAttribute('class', 'container');
+	container.setAttribute('class', 'container gameContainer');
+	container.setAttribute('id', 'gameContainer');
+	const gameBtns = document.createElement('button');
+	gameBtns.setAttribute('id', 'gameChoiceBtns');
+	gameBtns.style.display = 'flex';
 
 	const game = document.querySelector('.game');
 	const RPSName = document.createElement('div');
@@ -32,63 +36,82 @@ function rockPaperScissors(chosenPet) {
 	playerScissors.className = 'btn playerChoice scissors';
 	playerScissors.textContent = 'Scissors';
 
-	container.appendChild(playerRock);
-	container.appendChild(playerPaper);
-	container.appendChild(playerScissors);
-
+	gameBtns.appendChild(playerRock);
+	gameBtns.appendChild(playerPaper);
+	gameBtns.appendChild(playerScissors);
+	container.appendChild(gameBtns);
 
 	function getPlayerChoice(event) {
-        container.removeChild(playerRock);
-	container.removeChild(playerPaper);
-	container.removeChild(playerScissors);
+		gameBtns.removeChild(playerRock);
+		gameBtns.removeChild(playerPaper);
+		gameBtns.removeChild(playerScissors);
 		return event.target.textContent; // "Rock", "Paper", or "Scissors"
 	}
 
 	function playRound(player, computer, chosenPet, updateBars) {
-    if (player === computer) {
-        chosenPet.energy -= 4;
-        updateBars(chosenPet);
-        return "Draw";
-    }
+		const expIncrease = chosenPet.level * 6.4;
+		if (player === computer) {
+			chosenPet.energy -= 4;
+			chosenPet.exp += expIncrease / 4;
+			if (chosenPet.exp > chosenPet.expNeeded) {
+				chosenPet.increaseLevel()
+			}
+			updateBars(chosenPet);
+			return 'Draw';
+		}
 
-    if (
-        (player === 'Rock' && computer === 'Scissors') ||
-        (player === 'Paper' && computer === 'Rock') ||
-        (player === 'Scissors' && computer === 'Paper')
-    ) {
-        chosenPet.coinAmount += 4;
-        chosenPet.exp += 6;
-        chosenPet.energy -= 4;
-		chosenPet.happiness += 2;
-		if (chosenPet.happiness > chosenPet.maxHappiness) {
-						chosenPet.happiness = chosenPet.maxHappiness;
-					}
-        updateBars(chosenPet);
-        return "Win";
-    }
+		if (
+			(player === 'Rock' && computer === 'Scissors') ||
+			(player === 'Paper' && computer === 'Rock') ||
+			(player === 'Scissors' && computer === 'Paper')
+		) {
+			let randomCoin = Math.floor(Math.random() * 11 + 7)
+			chosenPet.coinAmount += randomCoin;
+			chosenPet.exp += expIncrease;
+			if (chosenPet.exp > chosenPet.expNeeded) {
+				chosenPet.increaseLevel()
+			} 
 
-    chosenPet.energy -= 4;
-	chosenPet.happiness -= 5
-    updateBars(chosenPet);
-    return "Lose";
-}
+
+			chosenPet.energy -= 4;
+			chosenPet.happiness += 2;
+			if (chosenPet.happiness > chosenPet.maxHappiness) {
+				chosenPet.happiness = chosenPet.maxHappiness;
+			}
+			updateBars(chosenPet);
+			return 'Win';
+		}
+
+		chosenPet.energy -= 4;
+		chosenPet.happiness -= 5;
+
+		updateBars(chosenPet);
+		return 'Lose';
+	}
 
 	function gameRPS(event) {
 		const humanMove = getPlayerChoice(event);
 		const computerMove = getComputerChoice();
 		const result = playRound(humanMove, computerMove, chosenPet, updateBars);
 		const gameResults = document.createElement('div');
-		gameResults.setAttribute('class', 'stat');
+		gameResults.setAttribute('class', 'gameResults');
 		const gameChoicesRPS = document.createElement('div');
-		gameChoicesRPS.setAttribute('class', 'stat');
-		gameChoicesRPS.textContent = `Player choice: ${humanMove}, Computer choice: ${computerMove}`;
+
+		gameBtns.style.display = 'flex';
+
 		if (result == 'Win' || result === 'Lose') {
-			gameResults.textContent = `You ${result}`;
+			gameResults.textContent = `Player choice: ${humanMove}, Computer choice: ${computerMove}.
+			You ${result}`;
 		} else {
-			gameResults.textContent = "It's a draw!";
+			gameResults.textContent = ` Player choice: ${humanMove}, Computer choice: ${computerMove}.
+			It's a draw!`;
 		}
-		container.appendChild(gameChoicesRPS);
-		container.appendChild(gameResults);
+		const resultsPopUp = document.createElement('div');
+		resultsPopUp.setAttribute('class', 'stat popUp results');
+
+		resultsPopUp.appendChild(gameChoicesRPS);
+		resultsPopUp.appendChild(gameResults);
+		container.appendChild(resultsPopUp);
 
 		endGame(chosenPet);
 
