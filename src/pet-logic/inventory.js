@@ -25,17 +25,17 @@ function removeStock(pet, name, amount = 1) {
 	if (current <= amount) {
 		pet.inventory.delete(name);
 	} else {
-		pet.inventory.set(name, current - amount);
+		pet.inventory.set( name, current - amount);
 	}
 }
 
 //check if play has item
-function playerHasItem(itemName) {
+function playerHasItem(pet, itemName) {
 	return pet.inventory.has(itemName);
 }
 
 //get quantity
-function checkQuantity(itemName) {
+function checkQuantity(pet,itemName) {
 	return pet.inventory.get(itemName) || 0;
 }
 
@@ -101,7 +101,7 @@ function showInventory(chosenPet) {
 		inventoryItem.addEventListener('click', () => {
 			const item = itemData[name];
 			item.use(chosenPet);
-			removeStock(name);
+			removeStock(chosenPet, name);
 			updateBars(chosenPet);
 			saveGame(chosenPet);
 

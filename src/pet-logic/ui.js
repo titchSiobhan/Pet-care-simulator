@@ -171,6 +171,9 @@ function updateBars(chosenPet) {
 
 	exp.value = chosenPet.exp;
 	exp.max = chosenPet.expNeeded ?? 1;
+	if (chosenPet.exp >= chosenPet.expNeeded) {
+				chosenPet.increaseLevel()
+			}
 	// if (chosenPet.hunger > chosenPet.maxHunger) {
 	// 	chosenPet.hunger = chosenPet.maxHunger;
 	// };
