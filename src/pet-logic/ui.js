@@ -5,31 +5,29 @@ import { setUpItems, setUpShop } from './inventory.js';
 function displayStats(chosenPet) {
 	const game = document.querySelector('.game');
 	const statArea = document.createElement('div');
-	statArea.setAttribute('class', 'statArea')
+	statArea.setAttribute('class', 'statArea');
 	const wrapper = document.createElement('div');
 	wrapper.setAttribute('class', 'stat-wrapper');
 	const petName = document.createElement('div');
 	petName.setAttribute('class', 'stat');
-	petName.setAttribute('id', 'petName')
-	petName.textContent = chosenPet.name
+	petName.setAttribute('id', 'petName');
+	petName.textContent = chosenPet.name;
 	statArea.appendChild(petName);
-
 
 	let level = document.createElement('div');
 	level.textContent = `Level: ${chosenPet.level}`;
 	level.setAttribute('class', 'stat level');
-	level.setAttribute('id', 'level-stat')
+	level.setAttribute('id', 'level-stat');
 
 	// let health = document.createElement('div');
 	// health.textContent = `Health: ${chosenPet.health}`;
 	// health.setAttribute('class', 'stat health');
-	
 
 	let health = document.createElement('progress');
 	health.value = chosenPet.health;
 	health.max = chosenPet.maxHealth;
 	health.setAttribute('class', 'stat health stat-bar');
-	wrapper.setAttribute('id', 'health-stat')
+	wrapper.setAttribute('id', 'health-stat');
 	const labelHealth = document.createElement('label');
 	labelHealth.textContent = 'Health';
 	labelHealth.setAttribute('class', 'stat');
@@ -48,15 +46,14 @@ function displayStats(chosenPet) {
 	hunger.value = chosenPet.hunger;
 	hunger.max = chosenPet.maxHunger;
 	hunger.setAttribute('class', 'stat hunger stat-bar');
-	wrapperHunger.setAttribute('id', 'hunger-stat')
+	wrapperHunger.setAttribute('id', 'hunger-stat');
 	const labelHunger = document.createElement('label');
 	labelHunger.textContent = 'Hunger';
-	labelHunger.setAttribute('class', 'stat')
+	labelHunger.setAttribute('class', 'stat');
 	// wrapperHunger.setAttribute('id', 'hungerBar');
 	labelHunger.setAttribute('for', 'hungerBar');
 	wrapperHunger.appendChild(labelHunger);
 	wrapperHunger.appendChild(hunger);
-
 
 	// let exp = document.createElement('div');
 	// exp.textContent = `Exp: ${chosenPet.exp}`;
@@ -68,17 +65,16 @@ function displayStats(chosenPet) {
 	exp.value = chosenPet.exp;
 	exp.max = chosenPet.expNeeded ?? 1;
 	exp.setAttribute('class', 'stat exp stat-bar expCircle');
-	
+
 	const labelExp = document.createElement('label');
-	labelExp.textContent = 'Exp'
-	labelExp.setAttribute('class', 'stat')
+	labelExp.textContent = 'Exp';
+	labelExp.setAttribute('class', 'stat');
 	exp.setAttribute('id', 'expBar');
 	labelExp.setAttribute('for', 'expBar');
 	wrapperExp.appendChild(labelExp);
 	wrapperExp.appendChild(exp);
-	wrapperExp.setAttribute('id', 'exp-stat')
+	wrapperExp.setAttribute('id', 'exp-stat');
 
-	
 	let type = document.createElement('div');
 	type.textContent = `Type: ${chosenPet.type}`;
 	type.setAttribute('class', 'stat');
@@ -86,7 +82,7 @@ function displayStats(chosenPet) {
 	let coin = document.createElement('div');
 	coin.textContent = `Coins: ${chosenPet.coinAmount}`;
 	coin.setAttribute('class', 'stat coin');
-	coin.setAttribute('id', 'coin-stat')
+	coin.setAttribute('id', 'coin-stat');
 
 	// let energy = document.createElement('div');
 	// energy.textContent = `Energy: ${chosenPet.energy}`;
@@ -99,15 +95,15 @@ function displayStats(chosenPet) {
 	energy.max = chosenPet.maxEnergy;
 	energy.setAttribute('class', 'stat energy stat-bar');
 	const labelEnergy = document.createElement('label');
-	labelEnergy.textContent = 'Energy'
-	labelEnergy.setAttribute('class', 'stat')
-	
+	labelEnergy.textContent = 'Energy';
+	labelEnergy.setAttribute('class', 'stat');
+
 	energy.setAttribute('id', 'energyBar');
 	labelEnergy.setAttribute('for', 'energyBar');
 	wrapperEnergy.appendChild(labelEnergy);
 	wrapperEnergy.appendChild(energy);
-	wrapperEnergy.setAttribute('id', 'energy-stat')
-	
+	wrapperEnergy.setAttribute('id', 'energy-stat');
+
 	// let happiness = document.createElement('div');
 	// happiness.textContent = 'Happiness: ' + ((chosenPet.happiness / chosenPet.maxHappiness) * 100) + '%';
 	// happiness.setAttribute('class', 'stat happiness');
@@ -119,24 +115,24 @@ function displayStats(chosenPet) {
 	happiness.max = chosenPet.maxHappiness;
 	happiness.setAttribute('class', 'stat happiness stat-bar');
 	const labelHappiness = document.createElement('label');
-	labelHappiness.setAttribute('class', 'stat')
-	labelHappiness.textContent = 'Happiness'
+	labelHappiness.setAttribute('class', 'stat');
+	labelHappiness.textContent = 'Happiness';
 	happiness.setAttribute('id', 'happinessBar');
 	labelHappiness.setAttribute('for', 'happinessBar');
 	wrapperHappiness.appendChild(labelHappiness);
 	wrapperHappiness.appendChild(happiness);
-	wrapperHappiness.setAttribute('id', 'happiness-stat')
+	wrapperHappiness.setAttribute('id', 'happiness-stat');
 
 	game.appendChild(statArea);
 	// statArea.appendChild(type);
 	statArea.appendChild(level);
 	statArea.appendChild(wrapper);
 	statArea.appendChild(wrapperHunger);
-	statArea.appendChild(wrapperExp)
+	statArea.appendChild(wrapperExp);
 	statArea.appendChild(wrapperEnergy);
-	statArea.appendChild(wrapperHappiness)
+	statArea.appendChild(wrapperHappiness);
 	statArea.appendChild(coin);
-	
+
 	return { statArea, level, health };
 }
 
@@ -152,49 +148,44 @@ function updateBars(chosenPet) {
 	const exp = document.querySelector('.exp');
 	const coin = document.querySelector('.coin');
 	const energy = document.querySelector('.energy');
-	const happiness = document.querySelector('.happiness')
+	const happiness = document.querySelector('.happiness');
 
 	hunger.value = chosenPet.hunger;
 	hunger.max = chosenPet.maxHunger;
 	if (chosenPet.hunger > chosenPet.maxHunger) {
 		chosenPet.hunger = chosenPet.maxHunger;
-	};
+	}
 
 	level.textContent = `Level: ${chosenPet.level}`;
 
 	health.value = chosenPet.health;
-	health.max = chosenPet.maxHealth
+	health.max = chosenPet.maxHealth;
 	if (chosenPet.health > chosenPet.maxHealth) {
 		chosenPet.health = chosenPet.maxHealth;
 	}
-	
 
 	exp.value = chosenPet.exp;
 	exp.max = chosenPet.expNeeded ?? 1;
 	if (chosenPet.exp >= chosenPet.expNeeded) {
-				chosenPet.increaseLevel()
-			}
+		chosenPet.increaseLevel();
+	}
 	// if (chosenPet.hunger > chosenPet.maxHunger) {
 	// 	chosenPet.hunger = chosenPet.maxHunger;
 	// };
 	coin.textContent = `Coins: ${chosenPet.coinAmount}`;
 	energy.value = chosenPet.energy;
-	energy.max = chosenPet.maxEnergy
+	energy.max = chosenPet.maxEnergy;
 	if (chosenPet.energy > chosenPet.maxEnergy) {
 		chosenPet.energy = chosenPet.maxEnergy;
 	}
 	happiness.value = chosenPet.happiness;
-	happiness.max = chosenPet.maxHappiness
+	happiness.max = chosenPet.maxHappiness;
 	if (chosenPet.happiness > chosenPet.maxHappiness) {
 		chosenPet.happiness = chosenPet.maxHappiness;
 	}
-	
-
 }
 
 function foodButtons(foodItems, pet) {
-	const game = document.querySelector('.game');
-
 	foodItems.forEach((foodItem) => {
 		const foodBtn = document.createElement('button');
 		const btnContainer = document.querySelector('.btnContainer');
@@ -210,7 +201,7 @@ function foodButtons(foodItems, pet) {
 			allFoodBtns.forEach((btn) => {
 				btn.style.display = 'none';
 			});
-			resetButtons()
+			resetButtons();
 			pet.eat(foodItem);
 
 			updateBars(pet);
@@ -219,7 +210,6 @@ function foodButtons(foodItems, pet) {
 }
 function drinkButtons(drinkItems, pet) {
 	drinkItems.forEach((drinkItem) => {
-		const game = document.querySelector('.game')
 		const drinkBtn = document.createElement('button');
 		const btnContainer = document.querySelector('.btnContainer');
 		drinkBtn.setAttribute('class', 'drinkBtn foodsBtn btn');
@@ -232,7 +222,7 @@ function drinkButtons(drinkItems, pet) {
 			allFoodBtns.forEach((btn) => {
 				btn.style.display = 'none';
 			});
-			resetButtons()
+			resetButtons();
 			pet.eat(drinkItem);
 			updateBars(pet);
 		});
@@ -253,7 +243,7 @@ function baseButtons() {
 	const game = document.querySelector('.game');
 	const btnContainer = document.createElement('div');
 	btnContainer.setAttribute('class', 'btnContainer');
-	btnContainer.setAttribute('id', 'btnContainer')
+	btnContainer.setAttribute('id', 'btnContainer');
 	const foodListButtons = document.createElement('button');
 	foodListButtons.setAttribute('class', 'btn foods baseBtn');
 	foodListButtons.textContent = 'Food';
@@ -275,75 +265,71 @@ function baseButtons() {
 	shopBtn.textContent = 'Shop';
 	btnContainer.appendChild(shopBtn);
 
-	
-
 	const inventoryBtn = document.createElement('button');
 	inventoryBtn.setAttribute('class', 'btn inventory inventoryBtn');
 	inventoryBtn.textContent = 'Inventory';
 	btnContainer.appendChild(inventoryBtn);
 
-	game.appendChild(btnContainer)
+	game.appendChild(btnContainer);
 }
 
 function endGame() {
 	const container = document.querySelector('.gameContainer');
 
 	setTimeout(() => {
-						game.removeChild(container);
-						resetButtons()
-					}, 1780);
+		const game = document.querySelector('.game');
+		game.removeChild(container);
+		resetButtons();
+	}, 1780);
 }
 function resetButtons() {
-	const btnContainer = document.querySelector('.btnContainer')
-			const foodListButtons = document.querySelector('.foods');
-			const drinkListButtons = document.querySelector('.drinks');
-			const gameListButton = document.querySelector('.gamesBtn');
-			const shopBtn = document.querySelector('.shop');
-			const inventoryBtn = document.querySelector('.inventoryBtn');
-			const backBtn = document.querySelector('.backBtn');
+	const btnContainer = document.querySelector('.btnContainer');
+	const foodListButtons = document.querySelector('.foods');
+	const drinkListButtons = document.querySelector('.drinks');
+	const gameListButton = document.querySelector('.gamesBtn');
+	const shopBtn = document.querySelector('.shop');
+	const inventoryBtn = document.querySelector('.inventoryBtn');
+	const backBtn = document.querySelector('.backBtn');
 
-			foodListButtons.style.display = 'flex';
-			drinkListButtons.style.display = 'flex';
-			gameListButton.style.display = 'flex';
-			shopBtn.style.display = 'flex';
-			inventoryBtn.style.display = 'flex';
-			if (backBtn){
-			btnContainer.removeChild(backBtn) }
+	foodListButtons.style.display = 'flex';
+	drinkListButtons.style.display = 'flex';
+	gameListButton.style.display = 'flex';
+	shopBtn.style.display = 'flex';
+	inventoryBtn.style.display = 'flex';
+	if (backBtn) {
+		btnContainer.removeChild(backBtn);
+	}
 }
 
 function hideButtons() {
 	const foodListButtons = document.querySelector('.foods');
-			const drinkListButtons = document.querySelector('.drinks');
-			const gameListButton = document.querySelector('.gamesBtn');
-			const shopBtn = document.querySelector('.shop');
-			const inventoryBtn = document.querySelector('.inventoryBtn');
+	const drinkListButtons = document.querySelector('.drinks');
+	const gameListButton = document.querySelector('.gamesBtn');
+	const shopBtn = document.querySelector('.shop');
+	const inventoryBtn = document.querySelector('.inventoryBtn');
 
-			foodListButtons.style.display = 'none';
-			drinkListButtons.style.display = 'none';
-			gameListButton.style.display = 'none';
-			shopBtn.style.display = 'none';
-			inventoryBtn.style.display = 'none';
+	foodListButtons.style.display = 'none';
+	drinkListButtons.style.display = 'none';
+	gameListButton.style.display = 'none';
+	shopBtn.style.display = 'none';
+	inventoryBtn.style.display = 'none';
 }
 
 function backButton() {
-	const btnContainer = document.querySelector('.btnContainer')
-	const game = document.querySelector('.game')
+	const btnContainer = document.querySelector('.btnContainer');
+
 	const backBtn = document.createElement('button');
 	backBtn.setAttribute('class', 'back btn backBtn');
 	backBtn.textContent = 'Back';
-	btnContainer.appendChild(backBtn)
+	btnContainer.appendChild(backBtn);
 
 	backBtn.addEventListener('click', () => {
-		btnContainer.removeChild(backBtn)
+		btnContainer.removeChild(backBtn);
 		resetButtons();
 		setUpItems();
 		setUpShop();
-	})
-	
+	});
 }
-
-
-
 
 export {
 	updateBars,
@@ -354,5 +340,6 @@ export {
 	baseButtons,
 	endGame,
 	hideButtons,
-	resetButtons, backButton
+	resetButtons,
+	backButton,
 };

@@ -1,21 +1,10 @@
-
 import { shopItemList, itemData } from './shop.js';
 import { resetButtons, updateBars } from './ui.js';
 import { saveGame } from './gamePlay.js';
 
-const inventory = new Map();
-//add item
-//creates new entry or increases quantity
-// function addStock(name, amount = 1) {
-// 	const current = inventory.get(name) || 0;
-// 	inventory.set(name, current + amount);
-//     console.log(inventory)
-// }
-
 function addStock(pet, name, amount = 1) {
-    const current = pet.inventory.get(name) || 0;
-    pet.inventory.set(name, current + amount);
-    console.log("Updated pet inventory:", pet.inventory);
+	const current = pet.inventory.get(name) || 0;
+	pet.inventory.set(name, current + amount);
 }
 
 //remove item
@@ -25,25 +14,14 @@ function removeStock(pet, name, amount = 1) {
 	if (current <= amount) {
 		pet.inventory.delete(name);
 	} else {
-		pet.inventory.set( name, current - amount);
+		pet.inventory.set(name, current - amount);
 	}
-}
-
-//check if play has item
-function playerHasItem(pet, itemName) {
-	return pet.inventory.has(itemName);
-}
-
-//get quantity
-function checkQuantity(pet,itemName) {
-	return pet.inventory.get(itemName) || 0;
 }
 
 //connect to shop
 function shop(chosenPet) {
 	const game = document.querySelector('.game');
-    const btnContainer = document.querySelector('.btnContainer');
-
+	const btnContainer = document.querySelector('.btnContainer');
 
 	shopItemList.forEach((item) => {
 		const shopItem = document.createElement('button');
@@ -52,14 +30,12 @@ function shop(chosenPet) {
 
 		shopItem.addEventListener('click', () => {
 			buyItem(item, chosenPet);
-
-			console.log(inventory);
 			resetButtons(); //re adds base buttons and should delete back button
 			setUpShop(); //removes all shop items
 			updateBars(chosenPet);
 		});
 		btnContainer.appendChild(shopItem);
-        game.appendChild(btnContainer)
+		game.appendChild(btnContainer);
 	});
 }
 
@@ -67,32 +43,29 @@ function shop(chosenPet) {
 //check to see if enough coins
 //take coins away
 function buyItem(item, chosenPet) {
-    const game = document.querySelector('.game')
+	const game = document.querySelector('.game');
 	if (chosenPet.coinAmount >= item.cost) {
 		chosenPet.coinAmount -= item.cost;
 		addStock(chosenPet, item.name);
-        saveGame(chosenPet);
-
+		saveGame(chosenPet);
 	} else {
-        const popUp = document.createElement('div');
-        popUp.textContent = `You have ${chosenPet.coinAmount} coins, ${item.name} costs ${item.cost} coins`;
-        game.appendChild(popUp);
-        popUp.setAttribute('class', 'popUp')
+		const popUp = document.createElement('div');
+		popUp.textContent = `You have ${chosenPet.coinAmount} coins, ${item.name} costs ${item.cost} coins`;
+		game.appendChild(popUp);
+		popUp.setAttribute('class', 'popUp');
 
-        setTimeout(() => {
-            game.removeChild(popUp)
-        }, 1000)
+		setTimeout(() => {
+			game.removeChild(popUp);
+		}, 1000);
 	}
 }
-
-
 
 //show items
 
 function showInventory(chosenPet) {
-	const game = document.querySelector('.game');
 	chosenPet.inventory.forEach((quantity, name) => {
-		console.log(`${name}: x${quantity}`);
+		const btnContainer = document.querySelector('.btnContainer');
+
 		const inventoryItem = document.createElement('button');
 		inventoryItem.setAttribute('class', 'inventoryItem btn itemBtn');
 		inventoryItem.textContent = `${name}: x${quantity}`;
@@ -105,16 +78,14 @@ function showInventory(chosenPet) {
 			updateBars(chosenPet);
 			saveGame(chosenPet);
 
-            setUpItems();
+			setUpItems();
 			resetButtons();
-			
 		});
 	});
 }
 
 function setUpItems() {
-    
-    const btnContainer = document.querySelector('.btnContainer');
+	const btnContainer = document.querySelector('.btnContainer');
 	const inventoryItems = document.querySelectorAll('.inventoryItem');
 	inventoryItems.forEach((btn) => {
 		btnContainer.removeChild(btn);
@@ -122,7 +93,7 @@ function setUpItems() {
 }
 
 function setUpShop() {
-     const btnContainer = document.querySelector('.btnContainer');
+	const btnContainer = document.querySelector('.btnContainer');
 	const shopItemBtns = document.querySelectorAll('.shopBtn');
 	shopItemBtns.forEach((btn) => {
 		btnContainer.removeChild(btn);
